@@ -14,19 +14,19 @@ class TestCommentAPI:
 
 
 
-def test_comments_not_authenticated(api_client, post): # post - фикстура, создающая пост
-    url = reverse('comment-list', kwargs={'post_id': post.id})
-    response = api_client.get(url)
-    print(f"Status code: {response.status_code}") # Выводим статус код
-    print(f"Response data: {response.data}") # Выводим данные ответа
-    assert response.status_code == status.HTTP_200_OK  # Проверяем, что статус 200
+    def test_comments_not_authenticated(api_client, post): # post - фикстура, создающая пост
+        url = reverse('comment-list', kwargs={'post_id': post.id})
+        response = api_client.get(url)
+        print(f"Status code: {response.status_code}") # Выводим статус код
+        print(f"Response data: {response.data}") # Выводим данные ответа
+        assert response.status_code == status.HTTP_200_OK  # Проверяем, что статус 200
 
-def test_comment_single_not_authenticated(api_client, post, comment): # post и comment - фикстуры
-    url = reverse('comment-detail', kwargs={'post_id': post.id, 'pk': comment.id})
-    response = api_client.get(url)
-    print(f"Status code: {response.status_code}")
-    print(f"Response data: {response.data}")
-    assert response.status_code == status.HTTP_200_OK
+    def test_comment_single_not_authenticated(api_client, post, comment): # post и comment - фикстуры
+        url = reverse('comment-detail', kwargs={'post_id': post.id, 'pk': comment.id})
+        response = api_client.get(url)
+        print(f"Status code: {response.status_code}")
+        print(f"Response data: {response.data}")
+        assert response.status_code == status.HTTP_200_OK
 
     def test_comments_not_found(self, user_client, post):
         response = user_client.get(f'/api/v1/posts/{post.id}/comments/')
