@@ -30,7 +30,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     # Разрешаем чтение всем, но требуем аутентификацию для остальных действий
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,  # Для чтения - все, для остального - аутентификация
+        permissions.IsAuthenticatedOrReadOnly,
         IsAuthorOrReadOnly  # Для изменения и удаления - только автор
     ]
 
@@ -43,7 +43,8 @@ class CommentViewSet(viewsets.ModelViewSet):
         post_id = self.kwargs.get('post_id')
         post = get_object_or_404(Post, id=post_id)
         serializer.save(author=self.request.user, post=post)
-        
+
+
 class FollowViewSet(mixins.CreateModelMixin,
                     mixins.ListModelMixin,
                     viewsets.GenericViewSet):
