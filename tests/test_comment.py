@@ -3,10 +3,20 @@ from http import HTTPStatus
 import pytest
 
 from posts.models import Comment
+from rest_framework import status
+        from django.urls import reverse
+
+
 
 
 class TestCommentAPI:
     TEXT_FOR_COMMENT = 'Новый комментарий'
+
+    def test_comments_not_authenticated(api_client, post): # post - фикстура, создающая пост
+            url = reverse('comment-list', kwargs={'post_id': post.id})
+            response = api_client.get(url)
+            assert response.status_code == status.HTTP_200_OK  # Проверяем, что статус 200
+
 
     def test_comments_not_found(self, user_client, post):
         response = user_client.get(f'/api/v1/posts/{post.id}/comments/')
